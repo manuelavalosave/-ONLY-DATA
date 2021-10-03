@@ -25,7 +25,7 @@ $data = json_decode($json, TRUE);
 </head>
 
 <body id="page-top">
-    <!-- Navigation-->
+    <!-- Navigation--> 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
         <div class="container px-4">
             <a class="navbar-brand" href="#page-top">🌮 ONLY DATA Hackademy </a>
@@ -52,9 +52,9 @@ $data = json_decode($json, TRUE);
                     <p class="lead">El portal de la NASA proporciona 42,946 conjuntos de datos y 555 repositorios de códigos, así como enlaces a sitios de inovación abierta, documentos científicos, códigos y datos de numerosas agencias federales de EE. UU. La mayoría de los archivos se encuentran en JSON, se requiere una correcta organización por medio del catálogo de metadatos pública (data.nasa.gov).
 
                         Creando una busqueda y organizacion optimizada para el usuario, con esto logrando una manera más rápida y precisa, describiendo por medio de una ontología la representación de la red por medio de nodos. </p>
-
+                    <!--Realizar la consulta atraves del formulario-->
                     <form action="#" method="GET" id="FormularioDeEnvio">
-                        <div class="row">
+                        <div class="row"> <!-- parametros de busqueda por fecha -->
                             <div class="col">
                                 <label for="FechaInicial">Fecha Inicial </label>
                                 <input type="date" class="form-control" id="FechaInicial" name="FechaIN" ></input>
@@ -64,7 +64,7 @@ $data = json_decode($json, TRUE);
                                 <input type="date" class="form-control" id="FechaTermino" name="FechaTerm"></input>
                             </div>
                        
-                        <div class="col">
+                        <div class="col"> <!-- parametro de limite de resultados -->
                             <label for="NumeroDeregistro">Cantidad de resultado </label>
                             <input type="number" class="form-control" id="NumeroDeregistro" name="NumeroTotal"></input>
                         </div>
@@ -75,11 +75,11 @@ $data = json_decode($json, TRUE);
                 </form>
 
 
-
+                <!-- Tabla -->
                 <table class="table table-striped" id="tabla">
                     <thead>
-                        <tr>
-                        <th scope="col">No</th>
+                        <tr> <!-- Columnas de datos-->
+                        <th scope="col">No</th> 
                             <th scope="col">Fecha</th>
                             <th scope="col">titulo</th>
                             <th scope="col">Explicacion</th>
@@ -88,7 +88,7 @@ $data = json_decode($json, TRUE);
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr> <!-- Obtiene los resultado y los imprime -->
                             <td>1</td>
                             <td><?php echo $data['date']; ?></td>
                             <td><?php echo $data['title']; ?></td>
@@ -99,50 +99,51 @@ $data = json_decode($json, TRUE);
                     </tbody>
                 </table>
 <script>
+    //Prepara la consulta de la API
     $( document ).ready(function() {
         let endpoint = 'https://api.nasa.gov/planetary/apod'
   let apiKey = 'Id60W0G5Nb62HdQSrQ5tv9ah5HwkYMranPmVRvlK'
-
+        //Preveien que no se envien datos atraves del formulario 
   $('#FormularioDeEnvio').submit(function (ev) {
     ev.preventDefault();
     var contador = $("#NumeroDeregistro").val();
     var FechaIn = $("#FechaInicial").val();
     var FechaTer = $("#FechaTermino").val();
-
-    let enl ="";
+    
+    let enl =""; //Crea enlace para la consulta en funcion de fecha inicial y fecha teremino del formulario
     if(FechaIn.length >= 1 && FechaTer.length >= 1 ){
         FechaIn = FechaIn;
          FechaTer = FechaTer;
-      enl  =  endpoint + "?api_key=" + apiKey+"&start_date="+FechaIn+"&end_date="+FechaTer;
-    }else if(contador.length == 0){
+      enl  =  endpoint + "?api_key=" + apiKey+"&start_date="+FechaIn+"&end_date="+FechaTer; // Enlace
+    }else if(contador.length == 0){ //si solo envia numero de registros limitado muestra dicha cantidad
         contador = 1;
         enl  =  endpoint + "?api_key=" + apiKey+"&count="+ contador;
-    }else{
+    }else{  // si no envia numero de registro y no envia una fecha de inico y de final, muestra un resultado aleatorio
         contador =  $("#NumeroDeregistro").val();
         enl  =  endpoint + "?api_key=" + apiKey+"&count="+ contador;
     }
-    var display_results = $("#tabla");
+    var display_results = $("#tabla"); //Muestra los resultados en la tabla
     $.ajax({
 
-        url: enl,
+        url: enl, //Envia el enlace
         contentType: "application/json",
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function () { //Durante la obtencion de datos muestra un gif
             display_results.html("<img src='https://worldwind.arc.nasa.gov/agrosphere/images/nasa.gif'width='100'  class='rounded mx-auto d-block' >");
         },
         success: function(data){
-           
+           //Pasa los resultados del json y concatena el siguente resultado
 		    	display_results.empty();
 		 	display_results.html("Cargando...");
              var results = ' <table class="table table-striped" id="tabla">';
 			results += '<thead> <tr> <th scope="col">No</th> <th scope="col">Fecha</th><th scope="col">titulo</th><th scope="col">Explicacion</th><th scope="col"> Imagen </th>';
 			results += '<th></th> </tr> </thead> <tbody>';
-
+            //organica los datos
 			if (data.length != 0)
 				{
                     var num = 1
 				$.each(data, function() {
-                    if(contador.length == 0){
+                    if(contador.length == 0){ //en funcion del contador que se envia atraves del formulario
                         results += '<tr>';
   					results +='<td>' + num + '</td>';
   					results +='<td>' + this.date + '</td>';
@@ -155,7 +156,7 @@ $data = json_decode($json, TRUE);
                     num++;
                     }
                    else{
-                   if(num <= contador){
+                   if(num <= contador){ //Si envia un numero de registros limita el resultado en funcion del contador 
   					results += '<tr>';
                       results +='<td>' + num + '</td>';
   					results +='<td>' + this.date + '</td>';
@@ -169,6 +170,7 @@ $data = json_decode($json, TRUE);
                     }
                 }
 				});
+                //concatena el Copyrigth en cada resultado
 				results += '</tbody></table>';
                 display_results.empty();
 				display_results.append(results);
