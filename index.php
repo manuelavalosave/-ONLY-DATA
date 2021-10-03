@@ -54,7 +54,7 @@ $data = json_decode($json, TRUE);
                         Creando una busqueda y organizacion optimizada para el usuario, con esto logrando una manera más rápida y precisa, describiendo por medio de una ontología la representación de la red por medio de nodos. </p>
                     <!--Realizar la consulta atraves del formulario-->
                     <form action="#" method="GET" id="FormularioDeEnvio">
-                        <div class="row"> <!-- parametros de busqueda por fecha -->
+                        <div class="row"> <!-- Parametros de busqueda por fecha -->
                             <div class="col">
                                 <label for="FechaInicial">Fecha Inicial </label>
                                 <input type="date" class="form-control" id="FechaInicial" name="FechaIN" ></input>
@@ -64,7 +64,7 @@ $data = json_decode($json, TRUE);
                                 <input type="date" class="form-control" id="FechaTermino" name="FechaTerm"></input>
                             </div>
                        
-                        <div class="col"> <!-- parametro de limite de resultados -->
+                        <div class="col"> <!-- Parametro de limite de resultados -->
                             <label for="NumeroDeregistro">Cantidad de resultado </label>
                             <input type="number" class="form-control" id="NumeroDeregistro" name="NumeroTotal"></input>
                         </div>
@@ -115,10 +115,10 @@ $data = json_decode($json, TRUE);
         FechaIn = FechaIn;
          FechaTer = FechaTer;
       enl  =  endpoint + "?api_key=" + apiKey+"&start_date="+FechaIn+"&end_date="+FechaTer; // Enlace
-    }else if(contador.length == 0){ //si solo envia numero de registros limitado muestra dicha cantidad
+    }else if(contador.length == 0){ //Si solo envia numero de registros limitado muestra dicha cantidad, diferenciador
         contador = 1;
         enl  =  endpoint + "?api_key=" + apiKey+"&count="+ contador;
-    }else{  // si no envia numero de registro y no envia una fecha de inico y de final, muestra un resultado aleatorio
+    }else{  //Si no envia numero de registro y no envia una fecha de inico y de final, muestra un resultado aleatorio
         contador =  $("#NumeroDeregistro").val();
         enl  =  endpoint + "?api_key=" + apiKey+"&count="+ contador;
     }
@@ -138,12 +138,12 @@ $data = json_decode($json, TRUE);
              var results = ' <table class="table table-striped" id="tabla">';
 			results += '<thead> <tr> <th scope="col">No</th> <th scope="col">Fecha</th><th scope="col">titulo</th><th scope="col">Explicacion</th><th scope="col"> Imagen </th>';
 			results += '<th></th> </tr> </thead> <tbody>';
-            //organica los datos
+            //Organiza los datos
 			if (data.length != 0)
 				{
                     var num = 1
 				$.each(data, function() {
-                    if(contador.length == 0){ //en funcion del contador que se envia atraves del formulario
+                    if(contador.length == 0){ //En funcion del contador que se envia atraves del formulario
                         results += '<tr>';
   					results +='<td>' + num + '</td>';
   					results +='<td>' + this.date + '</td>';
@@ -156,7 +156,7 @@ $data = json_decode($json, TRUE);
                     num++;
                     }
                    else{
-                   if(num <= contador){ //Si envia un numero de registros limita el resultado en funcion del contador 
+                   if(num <= contador){ //Si envia un numero de registros limita el resultado en funcion del contador, Diferenciador
   					results += '<tr>';
                       results +='<td>' + num + '</td>';
   					results +='<td>' + this.date + '</td>';
@@ -170,7 +170,7 @@ $data = json_decode($json, TRUE);
                     }
                 }
 				});
-                //concatena el Copyrigth en cada resultado
+                //Concatena el Copyrigth en cada resultado
 				results += '</tbody></table>';
                 display_results.empty();
 				display_results.append(results);
