@@ -75,7 +75,7 @@ $data = json_decode($json, TRUE);
             </div>
         </div>
     </section>
-    <h2>esto es una edicion</h2>
+  
     <!-- Footer-->
     <footer class="py-5 bg-dark">
         <div class="container px-4">
